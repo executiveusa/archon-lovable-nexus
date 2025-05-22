@@ -1,6 +1,6 @@
 
 import { StatusCard } from '@/components/dashboard/StatusCard';
-import { AgentStatus } from '@/components/dashboard/AgentStatus';
+import { AgentStatus, Agent } from '@/components/dashboard/AgentStatus';
 import { MCPStatus } from '@/components/dashboard/MCPStatus';
 import { QuickAccess } from '@/components/dashboard/QuickAccess';
 import { MetaAgentSystem } from '@/components/modules/MetaAgentSystem';
@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Index = () => {
-  const agents = [
+  const agents: Agent[] = [
     { name: "Codex", type: "Development", status: "online", usagePercent: 25 },
     { name: "Venice", type: "Creative", status: "online", usagePercent: 10 },
     { name: "Gemini", type: "Multimodal", status: "standby", usagePercent: 0 },
