@@ -4,6 +4,7 @@ import { GlassContainer } from '@/components/glass/GlassContainer';
 import { GlassCursorTrail } from '@/components/glass/GlassCursorTrail';
 import { CrewAICard } from '@/components/agents/CrewAICard';
 import { VisualAgentCard } from '@/components/agents/VisualAgentCard';
+import { VoiceAgentCard } from '@/components/agents/VoiceAgentCard';
 
 const Agents = () => {
   return (
@@ -29,6 +30,7 @@ const Agents = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <CrewAICard />
             <VisualAgentCard />
+            <VoiceAgentCard />
           </div>
         </GlassContainer>
       </div>
