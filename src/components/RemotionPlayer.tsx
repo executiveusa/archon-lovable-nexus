@@ -15,6 +15,8 @@ export default function RemotionPlayer() {
           <Player
             component={IntroScene}
             durationInFrames={150}
+            compositionWidth={800}
+            compositionHeight={450}
             fps={30}
             controls
             style={{
