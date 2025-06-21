@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import CrewAI, { AgentStatus } from '@/agents/CrewAI';
+import CrewAI, { AgentStatus, LogEntry } from '@/agents/CrewAI';
 
 export function CrewAICard() {
   const [status, setStatus] = useState<AgentStatus>(CrewAI.status);
+  const [logs, setLogs] = useState<LogEntry[]>(CrewAI.logs);
   const [lastResponse, setLastResponse] = useState<string>('');
   const [isRunning, setIsRunning] = useState(false);
 
@@ -28,16 +29,29 @@ export function CrewAICard() {
     }
   };
 
+  const getLevelColor = (level: LogEntry['level']) => {
+    switch (level) {
+      case 'info': return 'text-archon-primary';
+      case 'warning': return 'text-archon-warning';
+      case 'error': return 'text-archon-danger';
+      default: return 'text-muted-foreground';
+    }
+  };
+
   const handleRunAgent = async () => {
     setIsRunning(true);
     setStatus('booting');
+    
     try {
       const response = await CrewAI.run();
       setLastResponse(response);
-      setStatus('active');
+      setStatus(CrewAI.status);
+      setLogs([...CrewAI.logs]);
     } catch (error) {
+      CrewAI.status = 'error';
+      CrewAI.addLog('error', 'Failed to initialize agent');
       setStatus('error');
-      setLastResponse('Failed to initialize');
+      setLogs([...CrewAI.logs]);
     } finally {
       setIsRunning(false);
     }
@@ -45,6 +59,7 @@ export function CrewAICard() {
 
   useEffect(() => {
     setStatus(CrewAI.status);
+    setLogs([...CrewAI.logs]);
   }, []);
 
   return (
@@ -72,6 +87,23 @@ export function CrewAICard() {
             {CrewAI.id}
           </code>
         </div>
+
+        {logs.length > 0 && (
+          <div className="p-3 bg-archon-bg/30 rounded border border-archon-border">
+            <div className="text-xs text-muted-foreground mb-2">Agent Logs:</div>
+            <div className="max-h-32 overflow-y-auto space-y-1 font-mono text-xs">
+              {logs.map((log, index) => (
+                <div key={index} className="flex gap-2">
+                  <span className="text-muted-foreground">[{log.timestamp}]</span>
+                  <span className={`font-medium ${getLevelColor(log.level)}`}>
+                    {log.level.toUpperCase()}:
+                  </span>
+                  <span>{log.message}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {lastResponse && (
           <div className="p-3 bg-archon-bg/30 rounded border border-archon-border">
