@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { GlassContainer } from '@/components/glass/GlassContainer';
 import { GlassButton } from '@/components/glass/GlassButton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,6 +14,7 @@ export function ReMotionPanel() {
   const [selectedTemplate, setSelectedTemplate] = useState('');
 
   const videoTemplates = [
+    { id: 'intro-scene', name: 'Intro Scene', duration: '5s' },
     { id: 'glass-hero', name: 'Glass Hero Intro', duration: '10s' },
     { id: 'agent-showcase', name: 'Agent Showcase', duration: '15s' },
     { id: 'dashboard-demo', name: 'Dashboard Demo', duration: '30s' },
@@ -98,15 +100,17 @@ export function ReMotionPanel() {
           >
             {isRendering ? 'Rendering...' : 'Render Video'}
           </GlassButton>
-          <GlassButton variant="outline" size="sm">
-            Preview
-          </GlassButton>
+          <Link to="/timeline">
+            <GlassButton variant="outline" size="sm">
+              Timeline
+            </GlassButton>
+          </Link>
         </div>
 
         <div className="mt-4 p-3 rounded-lg bg-archon-accent/5 border border-archon-accent/20">
           <div className="text-xs font-medium text-archon-accent mb-1">Recent Renders</div>
           <div className="text-xs text-muted-foreground">
-            glass-hero.mp4 • 2.3MB • 2 min ago
+            intro-scene.mp4 • 1.2MB • 1 min ago
           </div>
         </div>
       </CardContent>
