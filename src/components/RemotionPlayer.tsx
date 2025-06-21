@@ -16,12 +16,11 @@ export default function RemotionPlayer() {
             component={IntroScene}
             durationInFrames={150}
             fps={30}
-            width={800}
-            height={450}
             controls
             style={{
               width: '100%',
               maxWidth: '800px',
+              height: '450px',
             }}
           />
         </div>
