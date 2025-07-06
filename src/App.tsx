@@ -14,7 +14,7 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClient>
+  <QueryClientProvider client={queryClient}>
     <BrandKitProvider>
       <TooltipProvider>
         <Toaster />
