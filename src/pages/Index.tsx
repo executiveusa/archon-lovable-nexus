@@ -1,3 +1,5 @@
+
+import InteractiveHero from '@/components/branding/InteractiveHero';
 import { StatusCard } from '@/components/dashboard/StatusCard';
 import { AgentStatus, Agent } from '@/components/dashboard/AgentStatus';
 import { MCPStatus } from '@/components/dashboard/MCPStatus';
@@ -24,7 +26,12 @@ const Index = () => {
   return (
     <>
       <GlassCursorTrail />
-      <div className="space-y-6">
+      
+      {/* Hero Section with Cockpit Interface */}
+      <InteractiveHero />
+      
+      {/* Dashboard Content */}
+      <div className="space-y-6 p-6">
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold tracking-tight text-shadow">
             ARCHON <span className="text-archon-accent">NEXUS</span>
