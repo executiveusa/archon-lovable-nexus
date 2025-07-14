@@ -173,12 +173,11 @@ export default function InteractiveHero() {
                 borderColor: ring === 2 ? theme.colors.wickerGold : theme.colors.plasmaBlue,
                 transform: `scale(${1 + ring * 0.3})`,
               }}
-              animate={{ rotate: 360 }}
+              animate={{ rotate: ring % 2 === 0 ? -360 : 360 }}
               transition={{ 
                 duration: 10 + ring * 5, 
                 repeat: Infinity, 
-                ease: "linear",
-                direction: ring % 2 === 0 ? 'reverse' : 'normal'
+                ease: "linear"
               }}
             />
           ))}
