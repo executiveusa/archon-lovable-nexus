@@ -1,0 +1,12 @@
+project:
+  name: Archon X
+  repo: https://github.com/executiveusa/archon-x.git
+  branch: work
+patches:
+  directory: patches
+env:
+  file: .codex.env
+  template: .codex.env.template
+scripts:
+  push: scripts/push.sh
+  test: npm run lint && npm run build

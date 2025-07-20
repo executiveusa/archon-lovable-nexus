@@ -71,3 +71,24 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Patch Index
+
+PATCH 001 — Use tech stack vite_react_shadcn_ts
+PATCH 002 — Scaffold Phase-2 Code
+PATCH 003 — Fix: Agent status type mismatch
+PATCH 004 — Refactor: Implement Glass Mode dashboard rebuild
+PATCH 005 — Refactor: Integrate agent panel and glass UI
+PATCH 006 — Create npm-grunt.yml
+PATCH 007 — feat: Integrate Remotion scene player
+PATCH 008 — Fix: Remotion Player type error
+PATCH 009 — Fix: RemotionPlayer type errors
+PATCH 010 — Add CrewAI agent module
+PATCH 011 — feat: Render CrewAI agent status
+PATCH 012 — Add CrewAI run() log display
+PATCH 013 — Add VisualConsistencyAgent scaffold
+PATCH 014 — Add voice agent mic handler
+PATCH 015 — Refactor: Implement ArchonX branding
+PATCH 016 — Fix: Close QueryClientProvider tag
+PATCH 017 — Refactor: Implement responsive design
+PATCH 018 — Refactor: Optimize InteractiveHero for responsiveness
