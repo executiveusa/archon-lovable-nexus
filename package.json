@@ -8,7 +8,10 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:fitness-signals": "echo 'Fitness Signals Kit tests - placeholder for actual test suite'",
+    "validate:agents": "python3 scripts/validate_agents.py",
+    "test:all": "npm run validate:agents && npm run test:fitness-signals"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

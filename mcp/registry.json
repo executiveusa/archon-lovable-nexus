@@ -1,0 +1,348 @@
+{
+  "version": "2.0.0",
+  "tools": [
+    {
+      "id": "reports.print",
+      "name": "PlutoPrint PDF Generator",
+      "service": "plutoprint",
+      "endpoint": "http://localhost:8001/print",
+      "description": "Converts HTML content to high-quality PDF reports",
+      "input_schema": {
+        "type": "object",
+        "required": ["html"],
+        "properties": {
+          "html": {
+            "type": "string",
+            "description": "Raw HTML content to render"
+          },
+          "filename": {
+            "type": "string",
+            "description": "Optional filename for the generated PDF"
+          },
+          "meta": {
+            "type": "object",
+            "description": "Metadata to include in the PDF"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "jobId": {"type": "string"},
+          "pdfUrl": {"type": "string"},
+          "sha256": {"type": "string"}
+        }
+      }
+    },
+    {
+      "id": "policy.evaluate",
+      "name": "Parlant Policy Engine",
+      "service": "parlant",
+      "endpoint": "http://localhost:8002/evaluate",
+      "description": "Evaluates messages against policy guidelines and journey contexts",
+      "input_schema": {
+        "type": "object",
+        "required": ["messages"],
+        "properties": {
+          "messages": {
+            "type": "array",
+            "items": {"type": "object"},
+            "description": "Array of messages to evaluate"
+          },
+          "journeyContext": {
+            "type": "object",
+            "description": "Current journey context for policy evaluation"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "triggers": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Policy triggers that were activated"
+          },
+          "journey_state": {
+            "type": "string",
+            "description": "Updated journey state"
+          }
+        }
+      }
+    },
+    {
+      "id": "workflows.run",
+      "name": "Motia Workflow Engine",
+      "service": "motia",
+      "endpoint": "http://localhost:8003/workflows/run",
+      "description": "Orchestrates declarative YAML workflows with step-by-step execution",
+      "input_schema": {
+        "type": "object",
+        "required": ["workflow_id"],
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "Unique identifier for the workflow to execute"
+          },
+          "params": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Parameters to pass to the workflow"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {"type": "string"},
+          "run_id": {"type": "string"},
+          "status": {"type": "string"},
+          "outputs": {"type": "object"}
+        }
+      }
+    },
+    {
+      "id": "analytics.query",
+      "name": "Basedash Analytics Engine",
+      "service": "basedash",
+      "endpoint": "http://localhost:8004/query",
+      "description": "Processes natural language queries and generates interactive dashboards",
+      "input_schema": {
+        "type": "object",
+        "required": ["query"],
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Natural language analytics query"
+          },
+          "chart_type": {
+            "type": "string",
+            "enum": ["line", "bar", "pie", "scatter", "area"],
+            "description": "Preferred chart visualization type"
+          },
+          "time_range": {
+            "type": "string",
+            "description": "Time range for the query (e.g., '7d', '30d', '1y')"
+          },
+          "filters": {
+            "type": "object",
+            "description": "Additional filters to apply to the data"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "chart_config": {
+            "type": "object",
+            "description": "Configuration for rendering the chart"
+          },
+          "data": {
+            "type": "array",
+            "description": "Processed data for visualization"
+          },
+          "insights": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "AI-generated insights from the data"
+          },
+          "embed_url": {
+            "type": "string",
+            "description": "URL for embedding the dashboard"
+          }
+        }
+      }
+    },
+    {
+      "id": "rag.ingest",
+      "name": "Universal RAG Ingestion",
+      "service": "rag_universal",
+      "endpoint": "http://localhost:8005/ingest",
+      "description": "Ingests and processes 95+ file types for semantic search and retrieval",
+      "input_schema": {
+        "type": "object",
+        "required": ["content"],
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "File content or URL to ingest"
+          },
+          "file_type": {
+            "type": "string",
+            "description": "Type of file being ingested (pdf, docx, etc.)"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional metadata about the document"
+          },
+          "chunk_strategy": {
+            "type": "string",
+            "enum": ["heading", "table", "semantic"],
+            "description": "Strategy for chunking the document"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "document_id": {"type": "string"},
+          "chunks_created": {"type": "integer"},
+          "embedding_model": {"type": "string"},
+          "vector_ids": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      }
+    },
+    {
+      "id": "fitness.track",
+      "name": "Fitness Signals Tracker",
+      "service": "fitness_signals",
+      "endpoint": "http://localhost:8006/track",
+      "description": "Processes Bangle.js 2 fitness data and generates coaching insights",
+      "input_schema": {
+        "type": "object",
+        "required": ["device_data"],
+        "properties": {
+          "device_data": {
+            "type": "object",
+            "description": "Bangle.js sensor data including steps, heart rate, GPS"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "User identifier for tracking"
+          },
+          "tracking_type": {
+            "type": "string",
+            "enum": ["steps", "heart_rate", "sleep", "activity"],
+            "description": "Type of fitness data being tracked"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Duration of the tracking session"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "tracking_id": {"type": "string"},
+          "metrics": {
+            "type": "object",
+            "description": "Processed fitness metrics"
+          },
+          "coaching_insights": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "AI-generated coaching recommendations"
+          },
+          "report_url": {
+            "type": "string",
+            "description": "URL for the generated fitness report"
+          }
+        }
+      }
+    },
+    {
+      "id": "ai.query",
+      "name": "LlamaIndex AI Query",
+      "service": "llamaindex_ai",
+      "endpoint": "http://localhost:8007/query",
+      "description": "Performs document Q&A, semantic search, and knowledge synthesis",
+      "input_schema": {
+        "type": "object",
+        "required": ["query"],
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Natural language query"
+          },
+          "context_docs": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Document IDs to use as context"
+          },
+          "response_mode": {
+            "type": "string",
+            "enum": ["compact", "tree_summarize", "accumulate"],
+            "description": "How to synthesize the response"
+          },
+          "similarity_top_k": {
+            "type": "integer",
+            "default": 5,
+            "description": "Number of similar chunks to retrieve"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "type": "string",
+            "description": "AI-generated response"
+          },
+          "source_nodes": {
+            "type": "array",
+            "description": "Source documents used in the response"
+          },
+          "confidence_score": {
+            "type": "number",
+            "description": "Confidence level of the response"
+          },
+          "tokens_used": {
+            "type": "integer",
+            "description": "Number of tokens consumed"
+          }
+        }
+      }
+    }
+  ],
+  "agent_protocols": {
+    "crew_ai": {
+      "version": "2.0",
+      "fallback_chain": ["agent_zero", "abacus_ai"],
+      "task_handoff_format": "json",
+      "policy_check_required": true
+    },
+    "agent_zero": {
+      "version": "1.8",
+      "fallback_chain": ["crew_ai", "abacus_ai"],
+      "task_handoff_format": "structured",
+      "policy_check_required": true
+    },
+    "abacus_ai": {
+      "version": "3.2",
+      "fallback_chain": ["crew_ai", "agent_zero"],
+      "task_handoff_format": "natural_language",
+      "policy_check_required": true
+    }
+  },
+  "monetization": {
+    "tiers": {
+      "basic": {
+        "monthly_cost": 29,
+        "included_tools": ["reports.print", "policy.evaluate", "workflows.run"],
+        "query_limits": {
+          "analytics.query": 100,
+          "ai.query": 50
+        }
+      },
+      "premium": {
+        "monthly_cost": 99,
+        "included_tools": ["*"],
+        "features": ["fitness.track", "unlimited_queries", "priority_support"]
+      },
+      "enterprise": {
+        "monthly_cost": 299,
+        "included_tools": ["*"],
+        "features": ["custom_models", "dedicated_instances", "sla_support"]
+      },
+      "nonprofit": {
+        "monthly_cost": 15,
+        "included_tools": ["reports.print", "policy.evaluate", "analytics.query"],
+        "eligibility_required": true
+      }
+    }
+  }
+}
