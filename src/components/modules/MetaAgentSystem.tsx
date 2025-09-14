@@ -52,6 +52,51 @@ export function MetaAgentSystem() {
       backend: "Ollama (Local)",
       description: "Research and knowledge synthesis agent",
       features: ["Academic search", "Paper analysis", "Knowledge synthesis", "Citation management"]
+    },
+    {
+      id: "bigquery",
+      name: "BigQuery",
+      type: "Analytics",
+      status: true,
+      backend: "Google Cloud",
+      description: "Natural language to BigQuery translation and execution",
+      features: ["SQL generation", "Data analysis", "Natural language queries", "Fact assertion"]
+    },
+    {
+      id: "notebook",
+      name: "Notebook",
+      type: "Analytics",
+      status: true,
+      backend: "Google Cloud",
+      description: "AI-assisted Jupyter notebook generation and execution",
+      features: ["Code generation", "Data analysis", "Visualization", "ML workflows"]
+    },
+    {
+      id: "looker",
+      name: "Looker",
+      type: "Analytics",
+      status: true,
+      backend: "Google Cloud",
+      description: "Conversational analytics and dashboard generation",
+      features: ["Dashboard creation", "Natural language queries", "Visualization", "Business intelligence"]
+    },
+    {
+      id: "db-migration",
+      name: "DB Migration",
+      type: "Infrastructure",
+      status: true,
+      backend: "Google Cloud",
+      description: "Safe database migration planning and execution",
+      features: ["Migration planning", "Risk assessment", "Rollback safety", "Mangle validation"]
+    },
+    {
+      id: "gemini-github",
+      name: "Gemini GitHub",
+      type: "Security",
+      status: true,
+      backend: "Google Cloud",
+      description: "Repository analysis and automated PR security triage",
+      features: ["PR analysis", "Security scanning", "SBOM generation", "Automated comments"]
     }
   ];
 
