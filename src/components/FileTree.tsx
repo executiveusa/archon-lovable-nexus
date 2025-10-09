@@ -18,14 +18,14 @@ const tree: Node[] = [
   { name: "package.json" },
 ];
 
-function renderNode(node: Node, depth: number) {
+function renderNode(node: Node, depth: number, key?: string) {
   return (
-    <div key={node.name} className="pl-2">
+    <div key={key ?? node.name} className="pl-2">
       <div style={{ marginLeft: depth * 8 }} className="font-mono">
         {node.name}
       </div>
       {node.children &&
-        node.children.map((child) => renderNode(child, depth + 1))}
+        node.children.map((child) => renderNode(child, depth + 1, child.name))}
     </div>
   );
 }
