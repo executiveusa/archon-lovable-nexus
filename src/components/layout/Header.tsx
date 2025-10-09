@@ -11,9 +11,9 @@ export function Header() {
         <ArchonLogo />
         <div>
           <h1 className="text-lg font-bold tracking-tight text-archon-primary">
-            ARCHON<span className="text-xs ml-1 text-archon-secondary">v1.0</span>
+            SkipAgentX<span className="text-xs ml-1 text-archon-secondary">v1.0</span>
           </h1>
-          <p className="text-xs text-muted-foreground">Sovereign AI Control System</p>
+          <p className="text-xs text-muted-foreground">Grant seeking automation</p>
         </div>
       </div>
       

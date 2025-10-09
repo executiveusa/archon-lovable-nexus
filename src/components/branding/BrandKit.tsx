@@ -17,8 +17,8 @@ interface BrandKitProviderProps {
 export function BrandKitProvider({ children }: BrandKitProviderProps) {
   const value = {
     theme: archonXTheme,
-    brandName: 'ARCHON X',
-    tagline: 'We don\'t build websites. We build worlds.',
+    brandName: 'SkipAgentX',
+    tagline: 'Automating nonprofit grant seeking.',
   };
 
   return (
