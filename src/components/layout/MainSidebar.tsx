@@ -41,7 +41,7 @@ export function MainSidebar() {
       <SidebarContent>
         <div className="flex justify-center p-4">
           <div className="font-mono text-xl font-bold text-archon-primary tracking-wider">
-            ARCHON<span className="text-archon-accent">_</span>
+            SkipAgentX<span className="text-archon-accent">_</span>
           </div>
         </div>
         
