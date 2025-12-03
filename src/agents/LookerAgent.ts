@@ -23,6 +23,12 @@ export interface LookerAgent {
   generateDashboard: (prompt: string) => Promise<AgentResponse>;
   executeConversationalQuery: (query: string) => Promise<AgentResponse>;
   addLog: (level: LookerLogEntry['level'], message: string, dashboard?: string) => void;
+  createDashboard: (prompt: string) => { title: string; description: string; charts: any[]; filters: any[]; created_at: string };
+  translateToLookerQL: (naturalQuery: string) => string;
+  executeLookerQuery: (query: string) => Promise<{ rows: any[]; columns: any[] }>;
+  recommendVisualization: (query: string, results: any) => string;
+  generateChartConfig: (vizType: string, results: any) => any;
+  generateDashboardTitle: (prompt: string) => string;
 }
 
 const LookerAgentImpl: LookerAgent = {

@@ -23,6 +23,7 @@ export interface NotebookAgent {
   generateNotebook: (prompt: string) => Promise<AgentResponse>;
   executeNotebook: (notebookId: string) => Promise<AgentResponse>;
   addLog: (level: NotebookLogEntry['level'], message: string, notebook?: string) => void;
+  generateNotebookContent: (prompt: string) => any;
 }
 
 const NotebookAgentImpl: NotebookAgent = {

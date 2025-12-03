@@ -10,6 +10,8 @@ interface ModuleButton {
   color: string;
 }
 
+type Breakpoint = 'mobile' | 'tablet' | 'desktop';
+
 const modules: ModuleButton[] = [
   { name: 'REMOTION', icon: '▶', position: { x: -200, y: -100 }, color: '#1FC3FF' },
   { name: 'TRADINGAGENTS', icon: '📈', position: { x: 200, y: -100 }, color: '#884DFF' },
@@ -19,25 +21,39 @@ const modules: ModuleButton[] = [
   { name: 'DREAMGRAFTOD', icon: '💎', position: { x: 200, y: 100 }, color: '#884DFF' },
 ];
 
+// Breakpoint configuration
+const BREAKPOINTS = {
+  mobile: 640,
+  tablet: 1024,
+  desktop: 1280,
+};
+
 export default function InteractiveHero() {
   const { theme, brandName, tagline } = useBrandKit();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isMobile, setIsMobile] = useState(false);
+  const [breakpoint, setBreakpoint] = useState<Breakpoint>('desktop');
   const controls = useAnimation();
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkBreakpoint = () => {
+      const width = window.innerWidth;
+      if (width < BREAKPOINTS.mobile) {
+        setBreakpoint('mobile');
+      } else if (width < BREAKPOINTS.tablet) {
+        setBreakpoint('tablet');
+      } else {
+        setBreakpoint('desktop');
+      }
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    checkBreakpoint();
+    window.addEventListener('resize', checkBreakpoint);
     
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkBreakpoint);
   }, []);
 
   useEffect(() => {
-    if (!isMobile) {
+    if (breakpoint === 'desktop') {
       const handleMouseMove = (e: MouseEvent) => {
         const x = (e.clientX / window.innerWidth) * 2 - 1;
         const y = (e.clientY / window.innerHeight) * 2 - 1;
@@ -47,38 +63,45 @@ export default function InteractiveHero() {
       window.addEventListener('mousemove', handleMouseMove);
       return () => window.removeEventListener('mousemove', handleMouseMove);
     }
-  }, [isMobile]);
+  }, [breakpoint]);
 
   useEffect(() => {
-    if (!isMobile) {
+    if (breakpoint === 'desktop') {
       controls.start({
         rotateX: mousePosition.y,
         rotateY: mousePosition.x,
         transition: { duration: 0.4 }
       });
     }
-  }, [mousePosition, controls, isMobile]);
+  }, [mousePosition, controls, breakpoint]);
 
-  // Responsive module positions
+  // Responsive module positions based on breakpoint
   const getResponsivePosition = (module: ModuleButton, index: number) => {
-    if (isMobile) {
-      // Stack modules vertically on mobile
-      const row = Math.floor(index / 2);
-      const col = index % 2;
-      return {
-        x: col === 0 ? -80 : 80,
-        y: (row - 2.5) * 80
-      };
-    } else if (window.innerWidth < 1024) {
-      // Closer positioning for tablet
-      return {
-        x: module.position.x * 0.6,
-        y: module.position.y * 0.7
-      };
+    switch (breakpoint) {
+      case 'mobile':
+        // Stack modules in 2 columns on mobile
+        const row = Math.floor(index / 2);
+        const col = index % 2;
+        return {
+          x: col === 0 ? -60 : 60,
+          y: (row - 1) * 70
+        };
+      case 'tablet':
+        // Closer positioning for tablet
+        return {
+          x: module.position.x * 0.65,
+          y: module.position.y * 0.75
+        };
+      case 'desktop':
+      default:
+        // Full desktop positioning
+        return module.position;
     }
-    // Desktop positioning
-    return module.position;
   };
+
+  const isMobile = breakpoint === 'mobile';
+  const isTablet = breakpoint === 'tablet';
+  const isDesktop = breakpoint === 'desktop';
 
   return (
     <div 
@@ -88,12 +111,12 @@ export default function InteractiveHero() {
         backgroundImage: `url('/lovable-uploads/2cc99226-eb1d-41f5-b1b1-3df839964bd7.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundAttachment: window.innerWidth > 768 ? 'fixed' : 'scroll'
+        backgroundAttachment: isDesktop ? 'fixed' : 'scroll'
       }}
     >
-      {/* Ambient Particles */}
+      {/* Ambient Particles - reduced on mobile/tablet for performance */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(isMobile ? 20 : 50)].map((_, i) => (
+        {[...Array(isMobile ? 15 : isTablet ? 30 : 50)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 rounded-full"
@@ -118,7 +141,7 @@ export default function InteractiveHero() {
       {/* Central Cockpit Area */}
       <motion.div
         className="relative flex flex-col items-center z-10 w-full max-w-7xl mx-auto"
-        animate={!isMobile ? controls : {}}
+        animate={isDesktop ? controls : {}}
         style={{ perspective: 1000 }}
       >
         {/* Brand Title */}

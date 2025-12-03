@@ -44,6 +44,7 @@ export interface GeminiGitHubAgent {
   postSecurityComment: (repo: string, prNumber: number, findings: SecurityFinding[]) => Promise<boolean>;
   extractRepoFacts: (repo: string) => Promise<FactAssertion[]>;
   addLog: (level: GitHubLogEntry['level'], message: string, repo?: string, pr?: number) => void;
+  generateSecurityComment: (findings: SecurityFinding[]) => string;
 }
 
 const GeminiGitHubAgentImpl: GeminiGitHubAgent = {
