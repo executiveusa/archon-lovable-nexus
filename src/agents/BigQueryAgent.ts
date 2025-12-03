@@ -22,6 +22,7 @@ export interface BigQueryAgent {
   stop: () => void;
   executeNaturalLanguageQuery: (query: string) => Promise<AgentResponse>;
   addLog: (level: BigQueryLogEntry['level'], message: string, query?: string) => void;
+  translateToSQL: (naturalQuery: string) => Promise<string>;
 }
 
 const BigQueryAgentImpl: BigQueryAgent = {

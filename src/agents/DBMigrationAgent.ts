@@ -46,6 +46,8 @@ export interface DBMigrationAgent {
   validateMigration: (migrationId: string) => Promise<AgentResponse>;
   executePreflight: (migrationId: string) => Promise<AgentResponse>;
   addLog: (level: MigrationLogEntry['level'], message: string, database?: string) => void;
+  generateMigrationPlan: (description: string) => MigrationPlan;
+  generateMigrationName: (description: string) => string;
 }
 
 const DBMigrationAgentImpl: DBMigrationAgent = {
