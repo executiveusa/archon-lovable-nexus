@@ -32,13 +32,13 @@ jobs:
     
     steps:
       - name: 🔍 Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           
       - name: 📥 Get PR information
         id: pr-info
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const prNumber = context.payload.pull_request?.number || '${{ github.event.inputs.pr_number }}';
@@ -68,7 +68,7 @@ jobs:
             };
 
       - name: 🔧 Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '20'
           cache: 'npm'
@@ -190,7 +190,7 @@ jobs:
           echo "✅ All facts successfully asserted to Mangle knowledge base"
 
       - name: 💬 Post Security Analysis Comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
@@ -257,7 +257,7 @@ jobs:
             });
 
       - name: 📈 Update PR Status Check
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const riskScore = ${{ steps.security-analysis.outputs.risk_score }};
